@@ -1,25 +1,25 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
-const counterSlice = createSlice({
-  name: "counter",
-  initialState: {
-    date: Date(),
-    milliSec: 99,
-    Sec: 0,
-    Minute: 0,
-    Weather: null,
-  },
-  reducers: {
-    addNumber: (state, action) =>
+import { createReducer } from "@reduxjs/toolkit";
+import { actionCreator } from "./action/actionCreators";
+const clockFlow = createAction("CLOCK");
+const timeFlow = createAction("FLOW");
+
+const minusNumber = createAction("MINUS");
+const resetTimer = createAction("RESET");
+
+const counter = createReducer(
+  { date: Date(), milliSec: 0, Sec: 0, Minute: 0 },
+  {
+    [addNumber.type]: (state, action) =>
       (state = {
         ...state,
         Minute: action.payload.number + action.payload.plus,
       }),
-    minusNumber: (state, action) =>
+    [minusNumber.type]: (state, action) =>
       (state = {
         ...state,
         Minute: action.payload.number - action.payload.minus,
       }),
-    timeFlow: (state, action) =>
+    [timeFlow.type]: (state, action) =>
       (state =
         action.payload.milliSec <= 0 &&
         action.payload.Sec <= 0 &&
@@ -59,23 +59,10 @@ const counterSlice = createSlice({
                     : action.payload.Minute
                   : action.payload.Minute,
             }),
-    resetTimer: (state) =>
+    [resetTimer.type]: (state) =>
       (state = { ...state, Minute: 0, Sec: 0, milliSec: 0 }),
-    clockFlow: (state) => (state = { ...state, date: Date() }),
-  },
-});
+    [clockFlow.type]: (state) => (state = { ...state, date: Date() }),
+  }
+);
 
-export const {
-  addNumber,
-  minusNumber,
-  timeFlow,
-  resetTimer,
-  clockFlow,
-} = counterSlice.actions;
-
-const countStore = configureStore({
-  reducer: counterSlice.reducer,
-});
-
-//------------------------------------------------------------
-export default countStore;
+export default counter;

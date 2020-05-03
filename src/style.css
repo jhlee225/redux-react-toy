@@ -1,1 +1,10 @@
 @import "reset.css";
+.TimerChart {
+  display: flex;
+  transform: rotate(270deg) translateX(240px);
+}
+
+.Btns {
+  display: flex;
+  justify-content: space-around;
+}

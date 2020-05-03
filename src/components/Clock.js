@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { actionCreators } from "../store";
+import { clockFlow } from "../store";
 function Clock({ time, clockFlow }) {
   useEffect(() => {
     const Clock = setInterval((time) => {
@@ -19,7 +19,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { clockFlow: (time) => dispatch(actionCreators.clockFlow(time)) };
+  return { clockFlow: (time) => dispatch(clockFlow(time)) };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clock);
